@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Plus, CheckCircle, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, X as XIcon } from 'lucide-react';
 import Header from './PageComponents/Header';
-
+import StatsCard from './PageComponents/StatsCard';
 
   type IDprops = {
     id: number
@@ -83,7 +83,6 @@ type Todo = {
     completed: todos.filter(t => t.completed).length,
     active: todos.filter(t => !t.completed).length
   };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
      {/* header*/}
@@ -91,43 +90,7 @@ type Todo = {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                <CheckCircle className="w-6 h-6 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Tasks</p>
-                <p className="text-2xl font-bold text-gray-800">{stats.total}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
-                <CheckCircle className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-600">Completed</p>
-                <p className="text-2xl font-bold text-gray-800">{stats.completed}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
-                <Circle className="w-6 h-6 text-orange-600" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-600">Active</p>
-                <p className="text-2xl font-bold text-gray-800">{stats.active}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <StatsCard stats={stats} />
 
         {/* Add Todo Form */}
         <div className="bg-white rounded-xl shadow-sm p-6 mb-8 border border-gray-100">
@@ -138,7 +101,7 @@ type Todo = {
               onChange={(e) => setNewTodo(e.target.value)}
               placeholder="Add a new task..."
               className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              onKeyPress={(e) => e.key === 'Enter' && addTodo()}
+              onKeyDown={(e) => e.key === 'Enter' && !e.repeat && addTodo()}
             />
             <button
               onClick={addTodo}
