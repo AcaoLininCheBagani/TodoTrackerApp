@@ -1,9 +1,8 @@
 'use client'
 import React, { useState } from 'react';
 import { Plus, CheckCircle, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, X as XIcon } from 'lucide-react';
-type ChevronIconProps = {
-    className?: string
-  }
+import Header from './PageComponents/Header';
+
 
   type IDprops = {
     id: number
@@ -29,7 +28,7 @@ type Todo = {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editingText, setEditingText] = useState('');
   const [filter, setFilter] = useState('all');
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const addTodo = () => {
@@ -85,98 +84,10 @@ type Todo = {
     active: todos.filter(t => !t.completed).length
   };
 
-  const handleLogout = () => {
-    // In a real app, this would handle authentication logout
-    console.log('User logged out');
-    setIsProfileMenuOpen(false);
-  };
-
-  const handleSettings = () => {
-    console.log('Opening settings');
-    setIsProfileMenuOpen(false);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-gray-800">TodoDash</span>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-6">
-              <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium">Dashboard</a>
-              <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium">Tasks</a>
-              <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium">Analytics</a>
-            </nav>
-
-            {/* User Profile */}
-            <div className="relative">
-              <button
-                onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-              >
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-medium text-sm">
-                  JD
-                </div>
-                <span className="hidden md:block text-sm font-medium text-gray-700">John Doe</span>
-                <ChevronDownIcon className="w-4 h-4 text-gray-500 hidden md:block" />
-              </button>
-
-              {/* Profile Dropdown Menu */}
-              {isProfileMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                  <div className="px-4 py-2 border-b border-gray-100">
-                    <p className="text-sm font-medium text-gray-900">John Doe</p>
-                    <p className="text-xs text-gray-500">john@example.com</p>
-                  </div>
-                  <button
-                    onClick={handleSettings}
-                    className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <Settings className="w-4 h-4" />
-                    Settings
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-            >
-              {isMobileMenuOpen ? <XIcon className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-
-          {/* Mobile Navigation */}
-          {isMobileMenuOpen && (
-            <div className="md:hidden border-t border-gray-200 py-4">
-              <nav className="flex flex-col gap-4">
-                <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium py-2">Dashboard</a>
-                <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium py-2">Tasks</a>
-                <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium py-2">Analytics</a>
-              </nav>
-            </div>
-          )}
-        </div>
-      </header>
-
+     {/* header*/}
+     <Header  />
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Stats Cards */}
@@ -365,11 +276,4 @@ type Todo = {
   );
 }
 
-// Custom Chevron Down Icon Component
-function ChevronDownIcon({ className }: ChevronIconProps ) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-    </svg>
-  );
-}
+
