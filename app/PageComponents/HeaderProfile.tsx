@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Plus, CheckCircle, ChevronDown, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, X as XIcon } from 'lucide-react';
-
+import { ChevronDown, Settings, LogOut, Menu, X as XIcon } from 'lucide-react';
+import { useRouter } from "next/navigation";
 interface HeaderProps {
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function HeaderProfile({isMobileMenuOpen, setIsMobileMenuOpen}:HeaderProps) {
+    const router = useRouter();
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState<boolean>(false);
 
     const handleLogout = () => {
@@ -16,8 +17,8 @@ export default function HeaderProfile({isMobileMenuOpen, setIsMobileMenuOpen}:He
     };
 
     const handleSettings = () => {
-        console.log('Opening settings');
         setIsProfileMenuOpen(false);
+        router.push("/profile"); 
     };
     return (
         <>

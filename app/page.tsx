@@ -11,7 +11,6 @@ type IDprops = {
   id: number
 }
 
-
 export default function Home() {
   const [todos, setTodos] = useState([
     { id: 1, text: 'Complete project proposal', completed: false, priority: 'high' },
@@ -87,38 +86,33 @@ export default function Home() {
     active: todos.filter(t => !t.completed).length
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* header*/}
-      <Header />
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Stats Cards */}
-        <StatsCard stats={stats} />
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
+      {/* Stats Cards */}
+      <StatsCard stats={stats} />
 
-        {/* Add Todo Form */}
-        <AddTodo newTodo={newTodo} setNewTodo={setNewTodo} addTodo={addTodo} />
+      {/* Add Todo Form */}
+      <AddTodo newTodo={newTodo} setNewTodo={setNewTodo} addTodo={addTodo} />
 
-        {/* Filter Buttons */}
-        <FilterButton filter={filter} setFilter={setFilter}/>
+      {/* Filter Buttons */}
+      <FilterButton filter={filter} setFilter={setFilter} />
 
-        {/* Todo List */}
-        <TodoList 
-          filter={filter}
-          filteredTodos={filteredTodos}
-          editingId={editingId}
-          editingText={editingText}
-          setEditingText={setEditingText}
-          saveEdit={saveEdit}
-          cancelEdit={cancelEdit}
-          toggleTodo={toggleTodo}
-          startEditing={startEditing}
-          deleteTodo={deleteTodo}
-          />
+      {/* Todo List */}
+      <TodoList
+        filter={filter}
+        filteredTodos={filteredTodos}
+        editingId={editingId}
+        editingText={editingText}
+        setEditingText={setEditingText}
+        saveEdit={saveEdit}
+        cancelEdit={cancelEdit}
+        toggleTodo={toggleTodo}
+        startEditing={startEditing}
+        deleteTodo={deleteTodo}
+      />
 
-        {/* Footer */}
-        <div className="text-center mt-8 text-gray-500 text-sm">
-          <p>Click on the circle to mark tasks as complete • Double-click to edit</p>
-        </div>
+      {/* Footer */}
+      <div className="text-center mt-8 text-gray-500 text-sm">
+        <p>Click on the circle to mark tasks as complete • Double-click to edit</p>
       </div>
     </div>
   );
