@@ -1,11 +1,7 @@
-import { Plus, CheckCircle, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, X as XIcon } from 'lucide-react';
+import { Plus } from 'lucide-react';
+import { AddTodoProps } from '../entities/todos';
 
-interface Todo {
-    newTodo : string,
-    setNewTodo : React.Dispatch<React.SetStateAction<string>>
-    addTodo : () => void
-}
-export default function AddTodo({newTodo, setNewTodo, addTodo} : Todo){
+export default function AddTodo({newTodo, setNewTodo, addTodo} : AddTodoProps){
     return (
         <div className="bg-white rounded-xl shadow-sm p-6 mb-8 border border-gray-100">
           <div className="flex gap-3">

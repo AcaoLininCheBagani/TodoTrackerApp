@@ -1,13 +1,6 @@
-import { Plus, CheckCircle, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, X as XIcon } from 'lucide-react';
-type Stats = {
-    total: number,
-    completed: number,
-    active: number
-};
+import { CheckCircle, Circle } from 'lucide-react';
+import { StatsCardProps } from '../entities/todos';
 
-interface StatsCardProps {
-    stats: Stats
-}
 export default function StatsCard({ stats }: StatsCardProps) {
 
     const statsArray = [

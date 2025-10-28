@@ -39,3 +39,42 @@ export type Completion = {
     completed: number,
     pending: number
 }
+
+// add todo entities
+export interface AddTodoProps {
+    newTodo : string,
+    setNewTodo : React.Dispatch<React.SetStateAction<string>>
+    addTodo : () => void
+}
+
+// filter butto
+export interface Filter {
+    filter: string,
+    setFilter : (filterType: string ) => void
+}
+
+// header props
+
+export interface HeaderProps {
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+// stats card
+
+export interface StatsCardProps {
+    stats: {
+    total: number,
+    completed: number,
+    active: number
+}
+}
+
+// profile
+
+export type Settings = {
+    notifications: boolean,
+    darkMode: boolean,
+    emailNotifications: boolean,
+    autoSave: boolean
+}

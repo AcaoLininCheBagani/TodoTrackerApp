@@ -22,7 +22,6 @@ export default function Header() {
                         isMobileMenuOpen={isMobileMenuOpen}
                         setIsMobileMenuOpen={setIsMobileMenuOpen}
                     />
-
                 </div>
 
                 {/* Mobile Navigation */}

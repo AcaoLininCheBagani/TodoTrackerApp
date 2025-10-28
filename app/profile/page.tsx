@@ -1,13 +1,7 @@
 "use client";
-import React, { useState } from 'react';
-import { Plus, CheckCircle, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, Home, BarChart3, Calendar, Bell, Search, Filter, TrendingUp, Users, Activity, Clock, ChevronDown, Save, Eye, EyeOff } from 'lucide-react';
-
-type Settings = {
-    notifications: boolean,
-    darkMode: boolean,
-    emailNotifications: boolean,
-    autoSave: boolean
-}
+import { Save } from 'lucide-react';
+import { useState } from 'react';
+import { Settings } from '../entities/todos';
 
 export default function ProfileSetting() {
     const [settings, setSettings] = useState<Settings>({

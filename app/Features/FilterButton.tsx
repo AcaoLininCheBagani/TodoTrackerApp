@@ -1,8 +1,4 @@
-interface Filter {
-    filter: string,
-    setFilter : (filterType: string ) => void
-}
-
+import { Filter } from "../entities/todos"
 export default function FilterButton({filter, setFilter}: Filter){
     return (
          <div className="flex justify-center mb-6">

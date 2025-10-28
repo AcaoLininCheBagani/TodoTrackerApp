@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, Settings, LogOut, Menu, X as XIcon } from 'lucide-react';
 import { useRouter } from "next/navigation";
-interface HeaderProps {
-  isMobileMenuOpen: boolean;
-  setIsMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { HeaderProps } from '../entities/todos';
 
 export default function HeaderProfile({isMobileMenuOpen, setIsMobileMenuOpen}:HeaderProps) {
     const router = useRouter();
