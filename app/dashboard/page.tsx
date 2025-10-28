@@ -2,26 +2,8 @@
 import { useState, useEffect } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Plus, CheckCircle, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, Home, BarChart3, Calendar, Bell, Search, Filter, TrendingUp, Users, Activity, Clock, ChevronDown, Save, Eye, EyeOff } from 'lucide-react';
+import { Todos, Analytics, Completion } from '../entities/todos';
 
-type Todos = {
-    id: number,
-    text: string,
-    completed: boolean,
-    priority: 'high' | 'medium' | 'low',
-    createdAt: string
-}
-
-type Analytics = {
-    date: string,
-    completed: number,
-    total: number,
-    completionRate: number
-}
-type Completion = {
-    name: string,
-    completed: number,
-    pending: number
-}
 export default function Dashboard() {
     const [todos, setTodos] = useState<Todos[]>([
         { id: 1, text: 'Complete project proposal', completed: false, priority: 'high', createdAt: '2024-01-15' },

@@ -17,3 +17,25 @@ export interface TodoProps {
     startEditing: (todo: Todo) => void,
     deleteTodo: (id: number) => void
 }
+
+// dashboard entities
+export type Todos = {
+    id: number,
+    text: string,
+    completed: boolean,
+    priority: 'high' | 'medium' | 'low',
+    createdAt: string
+}
+
+export type Analytics = {
+    date: string,
+    completed: number,
+    total: number,
+    completionRate: number
+}
+
+export type Completion = {
+    name: string,
+    completed: number,
+    pending: number
+}
