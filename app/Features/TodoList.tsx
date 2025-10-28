@@ -1,24 +1,7 @@
-import { Plus, CheckCircle, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, X as XIcon } from 'lucide-react';
+import { CheckCircle, Circle, Trash2, Edit3, X} from 'lucide-react';
+import { TodoProps } from '../entities/todos';
 
-interface Todo {
-    id: number,
-    text: string,
-    completed: boolean,
-    priority: string
-}
-interface TodoList {
-    filter: string,
-    filteredTodos: Todo[],
-    editingId: number | null,
-    editingText: string,
-    setEditingText: React.Dispatch<React.SetStateAction<string>>,
-    saveEdit: () => void,
-    cancelEdit: () => void,
-    toggleTodo: (id: number) => void,
-    startEditing: (todo: Todo) => void,
-    deleteTodo: (id: number) => void
-}
-export default function TodoList({filter, filteredTodos, editingId, editingText, setEditingText, saveEdit, cancelEdit, toggleTodo, startEditing, deleteTodo}: TodoList){
+export default function TodoList({filter, filteredTodos, editingId, editingText, setEditingText, saveEdit, cancelEdit, toggleTodo, startEditing, deleteTodo}: TodoProps){
     return (
          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           {filteredTodos.length === 0 ? (
@@ -48,7 +31,7 @@ export default function TodoList({filter, filteredTodos, editingId, editingText,
                         onChange={(e) => setEditingText(e.target.value)}
                         className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         autoFocus
-                        onKeyPress={(e) => e.key === 'Enter' && saveEdit()}
+                        onKeyDown={(e) => e.key === 'Enter' && saveEdit()}
                       />
                       <button
                         onClick={saveEdit}

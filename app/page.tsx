@@ -1,15 +1,9 @@
 'use client'
-import React, { useState } from 'react';
-import { Plus, CheckCircle, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, X as XIcon } from 'lucide-react';
-import Header from './PageComponents/Header';
+import { useState } from 'react';
 import StatsCard from './PageComponents/StatsCard';
 import AddTodo from './Features/AddTodo';
 import FilterButton from './Features/FilterButton';
 import TodoList from './Features/TodoList';
-
-type IDprops = {
-  id: number
-}
 
 export default function Home() {
   const [todos, setTodos] = useState([
