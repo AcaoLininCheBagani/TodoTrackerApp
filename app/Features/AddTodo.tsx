@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 export default function AddTodo({ newTodo, setNewTodo, addTodo }: AddTodoProps) {
   return (
-    <Card className="p-6 mb-8">
+    <Card className="p-6 mb-8 @container/card">
       <div className="flex gap-3">
         <Input
          className="h-10 px-4 text-lg"

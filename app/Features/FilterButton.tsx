@@ -1,21 +1,30 @@
 import { Filter } from "../entities/todos"
-export default function FilterButton({filter, setFilter}: Filter){
-    return (
-         <div className="flex justify-center mb-6">
-          <div className="bg-white rounded-lg p-1 flex border border-gray-200">
-            {['all', 'active', 'completed'].map((filterType) => (
-              <button
-                key={filterType}
-                onClick={() => setFilter(filterType)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 capitalize ${filter === filterType
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-600 hover:text-gray-800'
-                  }`}
-              >
-                {filterType}
-              </button>
-            ))}
-          </div>
-        </div>
-    )
+import { Card, CardHeader, CardTitle, CardAction, CardDescription, CardContent } from "@/components/ui/card"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+export default function FilterButton({ filter, setFilter }: Filter) {
+  return (
+    <CardHeader>
+      <CardTitle>Todos</CardTitle>
+      <CardDescription>
+        <span className="hidden @[540px]/card:block">
+          Total todos
+        </span>
+      </CardDescription>
+      <CardAction>
+        <ToggleGroup
+          type="single"
+          value={filter}
+          onValueChange={(e) => {
+            setFilter(e)
+          }}
+          variant="outline"
+          className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
+        >
+          <ToggleGroupItem value="all">All</ToggleGroupItem>
+          <ToggleGroupItem value="active">Active</ToggleGroupItem>
+          <ToggleGroupItem value="completed">Completed</ToggleGroupItem>
+        </ToggleGroup>
+      </CardAction>
+    </CardHeader>
+  )
 }

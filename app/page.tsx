@@ -4,7 +4,7 @@ import StatsCard from './PageComponents/StatsCard';
 import AddTodo from './Features/AddTodo';
 import FilterButton from './Features/FilterButton';
 import TodoList from './Features/TodoList';
-
+import { Card, CardContent } from '@/components/ui/card';
 export default function Home() {
   const [todos, setTodos] = useState([
     { id: 1, text: 'Complete project proposal', completed: false, priority: 'high' },
@@ -87,22 +87,26 @@ export default function Home() {
       {/* Add Todo Form */}
       <AddTodo newTodo={newTodo} setNewTodo={setNewTodo} addTodo={addTodo} />
 
+    <Card className="@container/card">
       {/* Filter Buttons */}
       <FilterButton filter={filter} setFilter={setFilter} />
 
       {/* Todo List */}
-      <TodoList
-        filter={filter}
-        filteredTodos={filteredTodos}
-        editingId={editingId}
-        editingText={editingText}
-        setEditingText={setEditingText}
-        saveEdit={saveEdit}
-        cancelEdit={cancelEdit}
-        toggleTodo={toggleTodo}
-        startEditing={startEditing}
-        deleteTodo={deleteTodo}
-      />
+      <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+        <TodoList
+          filter={filter}
+          filteredTodos={filteredTodos}
+          editingId={editingId}
+          editingText={editingText}
+          setEditingText={setEditingText}
+          saveEdit={saveEdit}
+          cancelEdit={cancelEdit}
+          toggleTodo={toggleTodo}
+          startEditing={startEditing}
+          deleteTodo={deleteTodo}
+        />
+      </CardContent>
+    </Card>
 
       {/* Footer */}
       <div className="text-center mt-8 text-gray-500 text-sm">
