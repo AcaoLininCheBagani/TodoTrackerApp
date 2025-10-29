@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Plus, Mic } from 'lucide-react';
 import { AddTodoProps } from '../entities/todos';
 
 export default function AddTodo({newTodo, setNewTodo, addTodo} : AddTodoProps){
@@ -20,6 +20,14 @@ export default function AddTodo({newTodo, setNewTodo, addTodo} : AddTodoProps){
               <Plus className="w-5 h-5" />
               Add
             </button>
+
+            <button
+              onClick={addTodo}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center gap-2 font-medium"
+            >
+              <Mic className="w-5 h-5" />
+            </button>
+
           </div>
         </div>
     )

@@ -1,27 +1,35 @@
 import { CheckCircle, Circle } from 'lucide-react';
 import { StatsCardProps } from '../entities/todos';
-
+import { Card, CardHeader, CardDescription, CardTitle, CardAction, CardFooter } from '@/components/ui/card';
+import { Avatar } from '@/components/ui/avatar';
 export default function StatsCard({ stats }: StatsCardProps) {
 
     const statsArray = [
-        { icon: <CheckCircle className="w-6 h-6 text-blue-600" />, name: 'Total Tasks', stat: stats.total },
-        { icon: <CheckCircle className="w-6 h-6 text-green-600" />, name: 'Completed', stat: stats.completed },
-        { icon: <Circle className="w-6 h-6 text-orange-600" />, name: 'Active', stat: stats.active },
+        { icon: <CheckCircle className="w-8 h-8 text-blue-600" />, name: 'Total Tasks', stat: stats.total, desc: 'Total task within the day' },
+        { icon: <CheckCircle className="w-8 h-8 text-green-600" />, name: 'Completed', stat: stats.completed, desc: 'Completed for today' },
+        { icon: <Circle className="w-8 h-8 text-orange-600" />, name: 'Active', stat: stats.active, desc: 'Remaining task for today' },
     ]
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {statsArray.map((elem, key) => (
-                <div key={key} className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                    <div className="flex items-center">
-                        <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
-                            {elem.icon}
+                <Card className="@container/card" key={key}>
+                    <CardHeader>
+                        <CardDescription>{elem.name}</CardDescription>
+                        <CardAction>
+                            <Avatar>
+                                {elem.icon}
+                            </Avatar>
+                        </CardAction>
+                    </CardHeader>
+                    <CardFooter className="flex-col items-start gap-1.5 text-sm">
+                        <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                            {elem.stat}
+                        </CardTitle>
+                        <div className="text-muted-foreground">
+                            {elem.desc}
                         </div>
-                        <div>
-                            <p className="text-sm font-medium text-gray-600">{elem.name}</p>
-                            <p className="text-2xl font-bold text-gray-800">{elem.stat}</p>
-                        </div>
-                    </div>
-                </div>
+                    </CardFooter>
+                </Card>
             ))}
         </div>
     )
