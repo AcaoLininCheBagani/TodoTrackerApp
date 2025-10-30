@@ -87,26 +87,25 @@ export default function Home() {
       {/* Add Todo Form */}
       <AddTodo newTodo={newTodo} setNewTodo={setNewTodo} addTodo={addTodo} />
 
-    <Card className="@container/card">
-      {/* Filter Buttons */}
-      <FilterButton filter={filter} setFilter={setFilter} />
-
-      {/* Todo List */}
-      <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-        <TodoList
-          filter={filter}
-          filteredTodos={filteredTodos}
-          editingId={editingId}
-          editingText={editingText}
-          setEditingText={setEditingText}
-          saveEdit={saveEdit}
-          cancelEdit={cancelEdit}
-          toggleTodo={toggleTodo}
-          startEditing={startEditing}
-          deleteTodo={deleteTodo}
-        />
-      </CardContent>
-    </Card>
+      <Card className="@container/card">
+        {/* Filter Buttons */}
+        <FilterButton filter={filter} setFilter={setFilter} />
+        {/* Todo List */}
+        <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+          <TodoList
+            filter={filter}
+            filteredTodos={filteredTodos}
+            editingId={editingId}
+            editingText={editingText}
+            setEditingText={setEditingText}
+            saveEdit={saveEdit}
+            cancelEdit={cancelEdit}
+            toggleTodo={toggleTodo}
+            startEditing={startEditing}
+            deleteTodo={deleteTodo}
+          />
+        </CardContent>
+      </Card>
 
       {/* Footer */}
       <div className="text-center mt-8 text-gray-500 text-sm">
