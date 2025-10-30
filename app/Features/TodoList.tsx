@@ -1,19 +1,27 @@
 import { CheckCircle, Circle, Trash2, Edit3, X} from 'lucide-react';
 import { TodoProps } from '../entities/todos';
+import { useTodoStore } from '../providers/todo-store-provider';
 
 export default function TodoList({filter, filteredTodos, editingId, editingText, setEditingText, saveEdit, cancelEdit, toggleTodo, startEditing, deleteTodo}: TodoProps){
-    return (
+  const {todos: td, filter: ft, editingId: ei, editingText: et, setEditingText: sett, saveEdit: se} = useTodoStore((state) => state)
+   const filtered = td.filter(todo => {
+    if (ft === 'active') return !todo.completed;
+    if (ft === 'completed') return todo.completed;
+    return true;
+  });
+
+  return (
          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-          {filteredTodos.length === 0 ? (
+          {filtered.length === 0 ? (
             <div className="p-12 text-center">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-8 h-8 text-gray-400" />
               </div>
               <h3 className="text-lg font-medium text-gray-800 mb-2">No tasks found</h3>
               <p className="text-gray-600">
-                {filter === 'completed'
+                {ft === 'completed'
                   ? 'You haven\'t completed any tasks yet.'
-                  : filter === 'active'
+                  : ft === 'active'
                     ? 'All tasks are completed!'
                     : 'Add your first task to get started.'
                 }
@@ -21,20 +29,20 @@ export default function TodoList({filter, filteredTodos, editingId, editingText,
             </div>
           ) : (
             <div className="divide-y divide-gray-100">
-              {filteredTodos.map((todo) => (
+              {filtered.map((todo) => (
                 <div key={todo.id} className="p-4 hover:bg-gray-50 transition-colors duration-150">
-                  {editingId === todo.id ? (
+                  {ei === todo.id ? (
                     <div className="flex items-center gap-3">
                       <input
                         type="text"
-                        value={editingText}
-                        onChange={(e) => setEditingText(e.target.value)}
+                        value={et}
+                        onChange={(e) => sett(e.target.value)}
                         className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         autoFocus
-                        onKeyDown={(e) => e.key === 'Enter' && saveEdit()}
+                        onKeyDown={(e) => e.key === 'Enter' && se()}
                       />
                       <button
-                        onClick={saveEdit}
+                        onClick={se}
                         className="px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
                       >
                         Save

@@ -1,7 +1,9 @@
 import { Filter } from "../entities/todos"
 import { Card, CardHeader, CardTitle, CardAction, CardDescription, CardContent } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-export default function FilterButton({ filter, setFilter }: Filter) {
+import { useTodoStore } from "../providers/todo-store-provider"
+export default function FilterButton() {
+  const { filter, setFilter } = useTodoStore(state => state)
   return (
     <CardHeader>
       <CardTitle>Todos</CardTitle>

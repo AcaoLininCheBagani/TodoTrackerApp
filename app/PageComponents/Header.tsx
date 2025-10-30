@@ -28,8 +28,8 @@ export default function Header() {
                 {isMobileMenuOpen && (
                     <div className="md:hidden border-t border-gray-200 py-4">
                         <nav className="flex flex-col gap-4">
-                            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium py-2">Dashboard</a>
                             <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium py-2">Tasks</a>
+                            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium py-2">Dashboard</a>
                         </nav>
                     </div>
                 )}

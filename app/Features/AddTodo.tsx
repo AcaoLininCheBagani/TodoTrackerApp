@@ -4,15 +4,11 @@ import { AddTodoProps } from '../entities/todos';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-export default function AddTodo({ newTodo, setNewTodo, addTodo }: AddTodoProps) {
+import { useTodoStore } from "../providers/todo-store-provider";
 
-   const [transcript, setTranscript] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [isRecording, setIsRecording] = useState(false);
-    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-    const audioChunksRef = useRef<Blob[]>([]);
 
+export default function AddTodo() {
+  const {newTodo, setNewTodo, addTodo} = useTodoStore((state) => state)
   return (
     <Card className="p-6 mb-8 @container/card">
       <div className="flex gap-3">

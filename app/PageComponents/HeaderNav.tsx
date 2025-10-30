@@ -1,8 +1,8 @@
 import Link from "next/link";
 export default function HeaderNav() {
     const navName = [
-        {name: 'Dashboard', link: '/dashboard'},
-        {name: 'Task', link: '/'}
+        {name: 'Task', link: '/'},
+        {name: 'Dashboard', link: '/dashboard'}
     ]
     return (
         <nav className="hidden md:flex items-center gap-6">

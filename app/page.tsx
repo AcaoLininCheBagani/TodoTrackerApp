@@ -5,6 +5,7 @@ import AddTodo from './Features/AddTodo';
 import FilterButton from './Features/FilterButton';
 import TodoList from './Features/TodoList';
 import { Card, CardContent } from '@/components/ui/card';
+
 export default function Home() {
   const [todos, setTodos] = useState([
     { id: 1, text: 'Complete project proposal', completed: false, priority: 'high' },
@@ -85,11 +86,11 @@ export default function Home() {
       <StatsCard stats={stats} />
 
       {/* Add Todo Form */}
-      <AddTodo newTodo={newTodo} setNewTodo={setNewTodo} addTodo={addTodo} />
+      <AddTodo />
 
       <Card className="@container/card">
         {/* Filter Buttons */}
-        <FilterButton filter={filter} setFilter={setFilter} />
+        <FilterButton />
         {/* Todo List */}
         <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
           <TodoList
