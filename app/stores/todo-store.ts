@@ -6,8 +6,7 @@ export type TodoState = {
     newTodo: string,
     editingId: number | null,
     editingText: string,
-    filter: string
-    //   const [filter, setFilter] = useState('all');
+    filter: string,
 }
 
 export type TodoActions = {
@@ -35,10 +34,9 @@ export const initTodoStore = (): TodoState => {
         newTodo: "",
         editingId: null,
         editingText: '',
-        filter: 'all'
+        filter: 'all',
     }
 }
-
 
 export const createTodoStore = () => {
     return createStore<TodoStore>()((set, get) => ({

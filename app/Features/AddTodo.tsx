@@ -1,11 +1,8 @@
-import { useState, useRef } from "react";
 import { Plus, Mic } from 'lucide-react';
-import { AddTodoProps } from '../entities/todos';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { useTodoStore } from "../providers/todo-store-provider";
-
 
 export default function AddTodo() {
   const {newTodo, setNewTodo, addTodo} = useTodoStore((state) => state)
