@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { useTodoStore } from "../providers/todo-store-provider";
-
+import TranscribeButton from './TranscribeButton';
 export default function AddTodo() {
   const {newTodo, setNewTodo, addTodo} = useTodoStore((state) => state)
   return (
@@ -24,13 +24,8 @@ export default function AddTodo() {
           <Plus className="w-5 h-5" />
           Add
         </Button>
-
-        <Button
-          variant="outline" size="lg"
-          // onClick={startRecording}
-        >
-          <Mic className="w-5 h-5" />
-        </Button>
+      <TranscribeButton/>
+       
       </div>
     </Card>
   )
