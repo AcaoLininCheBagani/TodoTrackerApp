@@ -1,11 +1,9 @@
-import { CheckCircle, Circle, Trash2, Edit3, X} from 'lucide-react';
 import { useTodoStore } from '../providers/todo-store-provider';
 import TodoListEmpty from '../components/TodoListEmpty';
 import TodoListEdit from '../components/TodoListEdit';
 import TodoListElements from '../components/TodoListElements';
 export default function TodoList(){
-  const {todos, filter, editingId, editingText, setEditingText, saveEdit, cancelEdit, toggleTodo, startEditing, deleteTodo} = useTodoStore((state) => state)
-   
+  const {todos, filter, editingId } = useTodoStore((state) => state)
   const filteredTodos = todos.filter(todo => {
     if (filter === 'active') return !todo.completed;
     if (filter === 'completed') return todo.completed;
