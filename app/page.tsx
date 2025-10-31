@@ -7,18 +7,6 @@ import TodoList from './Features/TodoList';
 import { Card, CardContent } from '@/components/ui/card';
 
 export default function Home() {
-  const [todos, setTodos] = useState([
-    { id: 1, text: 'Complete project proposal', completed: false, priority: 'high' },
-    { id: 2, text: 'Review team submissions', completed: true, priority: 'medium' },
-    { id: 3, text: 'Schedule client meeting', completed: false, priority: 'high' },
-    { id: 4, text: 'Update documentation', completed: false, priority: 'low' },
-  ]);
-
-  const stats = {
-    total: todos.length,
-    completed: todos.filter(t => t.completed).length,
-    active: todos.filter(t => !t.completed).length
-  };
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       {/* Stats Cards */}
