@@ -3,8 +3,12 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Mic, MicOff } from "lucide-react"
 import { useVoiceAgent } from "../lib/hooks/useVoiceAgent";
-
-export default function TranscribeButton() {
+import {callLLM} from "../lib/api/ollama";
+type tranScribeProps = {
+    setNewTodo: (todo: string) => void,
+    addTodo: () => void
+}
+export default function TranscribeButton({ setNewTodo, addTodo }: tranScribeProps) {
     const {
         startRecording,
         stopRecording,
@@ -14,33 +18,20 @@ export default function TranscribeButton() {
         error,
     } = useVoiceAgent();
 
-    const [llmResponse, setLlmResponse] = useState('');
-    
-      // Send to LLM when transcription is ready
-    //   useEffect(() => {
-    //     if (result?.text) {
-    //       callLLM(result.text);
-    //     }
-    //   }, [result]);
-    
-    //   const callLLM = async (prompt: string) => {
-    //     try {
-    //       const res = await fetch('/api/llm', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ prompt }),
-    //       });
-    //       const data = await res.json();
-    //       setLlmResponse(data.response || '');
-    //     } catch (err) {
-    //       console.error('LLM call failed:', err);
-    //       setLlmResponse('Sorry, I had trouble processing that.');
-    //     }
-    //   };
+    // Send to LLM when transcription is ready
+      useEffect(() => {
+        if (result?.text) {
+          invokeOllama(result.text);
+        }
+      }, [result]);
 
-    if(result){
-        console.log('result', result)
-    }
+      const invokeOllama = async (text: string) => {
+        if(text) {
+            const response = await callLLM(text);
+            console.log(response, 'response')
+        }
+      };
+  
     return (
         <>
             {

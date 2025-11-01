@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-
+import { sendToWhisper } from '../api/whisper';
 type TranscriptionResult = {
   text: string;
   language?: string;
@@ -17,12 +17,6 @@ export function useVoiceAgent() {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-
-  // 🔥 Point to your Whisper server
-  const WHISPER_API_URL =
-    typeof window !== 'undefined' && window.location.hostname === 'localhost'
-      ? 'http://localhost:8000/transcribe'
-      : 'https://YOUR_NGROK_URL.ngrok.io/transcribe'; // ← Replace with your ngrok URL
 
   const startRecording = async () => {
     setResult(null);
@@ -82,24 +76,8 @@ export function useVoiceAgent() {
   const stopRecording = () => {
     if (mediaRecorderRef.current?.state === 'recording') {
       mediaRecorderRef.current.stop();
+      cleanup();
     }
-  };
-
-  const sendToWhisper = async (audioBlob: Blob): Promise<any> => {
-    const formData = new FormData();
-    formData.append('file', audioBlob, 'voice.webm');
-
-    const res = await fetch(WHISPER_API_URL, {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.detail || 'Failed to reach Whisper server');
-    }
-
-    return res.json();
   };
 
   const cleanup = () => {

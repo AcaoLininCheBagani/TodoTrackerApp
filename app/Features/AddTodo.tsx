@@ -5,12 +5,12 @@ import { Card } from '@/components/ui/card';
 import { useTodoStore } from "../providers/todo-store-provider";
 import TranscribeButton from './TranscribeButton';
 export default function AddTodo() {
-  const {newTodo, setNewTodo, addTodo} = useTodoStore((state) => state)
+  const { newTodo, setNewTodo, addTodo } = useTodoStore((state) => state)
   return (
     <Card className="p-6 mb-8 @container/card">
       <div className="flex gap-3">
         <Input
-         className="h-10 px-4 text-lg"
+          className="h-10 px-4 text-lg"
           type='text'
           value={newTodo}
           placeholder="Add a new task..."
@@ -24,8 +24,7 @@ export default function AddTodo() {
           <Plus className="w-5 h-5" />
           Add
         </Button>
-      <TranscribeButton/>
-       
+        <TranscribeButton setNewTodo={setNewTodo} addTodo={addTodo}/>
       </div>
     </Card>
   )
