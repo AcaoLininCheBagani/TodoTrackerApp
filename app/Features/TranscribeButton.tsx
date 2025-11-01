@@ -37,6 +37,7 @@ export default function TranscribeButton({ setNewTodo, addTodo }: tranScribeProp
             {
                 !isRecording ? (
                     <Button
+                        disabled
                         variant="outline" size="lg"
                         onClick={startRecording}
                     >
