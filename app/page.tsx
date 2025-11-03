@@ -1,12 +1,16 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import StatsCard from './PageComponents/StatsCard';
 import AddTodo from './Features/AddTodo';
 import FilterButton from './Features/FilterButton';
 import TodoList from './Features/TodoList';
 import { Card, CardContent } from '@/components/ui/card';
-
+import { useTodoStore } from './providers/todo-store-provider';
 export default function Home() {
+  const getTodos = useTodoStore((state) => state.loadTodos);
+  useEffect(() => {
+   getTodos()
+  },[getTodos]) 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       {/* Stats Cards */}

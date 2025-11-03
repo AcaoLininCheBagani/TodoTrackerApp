@@ -9,8 +9,8 @@ interface TodoListElementsProps {
 }
 
 type iconButtonProps = {
-    id: number,
-    toggle: (id: number) => void,
+    id: number | undefined,
+    toggle: (id: number | undefined) => void,
     children: ReactNode,
 }
 
@@ -30,7 +30,7 @@ export default function TodoListElements({ todo }: TodoListElementsProps) {
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 flex-1">
                 {iconButton({
-                    id: todo.id,
+                    id: todo._id,
                     toggle: toggleTodo,
                     children: todo.completed ? (
                         <CheckCircle className="w-5 h-5 text-green-600" />
@@ -45,7 +45,7 @@ export default function TodoListElements({ todo }: TodoListElementsProps) {
                         : 'text-gray-800'
                         }`}
                 >
-                    {todo.text}
+                    {todo.title}
                 </span>
                 <span className={`text-xs px-2 py-1 rounded-full ml-2 ${todo.priority === 'high'
                     ? 'bg-red-100 text-red-800'
@@ -65,7 +65,7 @@ export default function TodoListElements({ todo }: TodoListElementsProps) {
                     <Edit3 className="w-4 h-4" />
                 </Button>
                 {iconButton({
-                    id: todo.id,
+                    id: todo._id,
                     toggle: deleteTodo,
                     children: (<Trash2 className="w-4 h-4" />),
                 })}

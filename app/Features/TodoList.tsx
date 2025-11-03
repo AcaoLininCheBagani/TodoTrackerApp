@@ -16,9 +16,9 @@ export default function TodoList(){
             <TodoListEmpty filter={filter} />
           ) : (
             <div className="divide-y divide-gray-100">
-              {filteredTodos.map((todo) => (
-                <div key={todo.id} className="p-4 hover:bg-gray-50 transition-colors duration-150">
-                  {editingId === todo.id ? (
+              {filteredTodos.map((todo, key) => (
+                <div key={todo._id} className="p-4 hover:bg-gray-50 transition-colors duration-150">
+                  {editingId === todo._id ? (
                     <TodoListEdit/>
                   ) : (
                     <TodoListElements todo={todo} />

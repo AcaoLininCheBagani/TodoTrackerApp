@@ -7,9 +7,9 @@ export default function StatsCard() {
     const {todos} = useTodoStore((state) => state)
 
     const stats = {
-        total: todos.length,
-        completed: todos.filter(t => t.completed).length,
-        active: todos.filter(t => !t.completed).length
+        total: todos?.length,
+        completed: todos?.filter(t => t.completed).length,
+        active: todos?.filter(t => !t.completed).length
     };
 
     const statsArray = [

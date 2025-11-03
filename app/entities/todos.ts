@@ -1,8 +1,8 @@
 export interface Todo {
-    id: number,
-    text: string,
-    completed: boolean,
-    priority: string
+    _id?: number | undefined,
+    title: string | undefined,
+    completed?: boolean | undefined,
+    priority?: string | undefined,
 }
 
 export interface TodoProps {
