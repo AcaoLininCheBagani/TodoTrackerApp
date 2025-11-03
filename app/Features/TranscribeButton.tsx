@@ -5,10 +5,10 @@ import { Mic, MicOff } from "lucide-react"
 import { useVoiceAgent } from "../lib/hooks/useVoiceAgent";
 import {callLLM} from "../lib/api/ollama";
 type tranScribeProps = {
-    setNewTodo: (todo: string) => void,
+    setNewTodo?: (todo: string) => void,
     addTodo: () => void
 }
-export default function TranscribeButton({ setNewTodo, addTodo }: tranScribeProps) {
+export default function TranscribeButton({  addTodo }: tranScribeProps) {
     const {
         startRecording,
         stopRecording,

@@ -3,21 +3,19 @@ import { Todo } from "../entities/todos";
 import { addTodo, deletTodo, GetAllTodos, updateTodo } from "../lib/api/todo";
 export type TodoState = {
     todos: Todo[],
-    newTodo: string,
     editingId: number | null,
     editingText: string,
     filter: string,
-    loading: boolean
+    loading: boolean,
 }
 
 export type TodoActions = {
-    addTodo: () => void,
+    addTodo: (td: string|undefined) => void,
     toggleTodo: (id: number | undefined) => void,
     deleteTodo: (id: number | undefined) => void,
     startEditing: (todo: Todo) => void,
     saveEdit: () => void,
     cancelEdit: () => void,
-    setNewTodo: (newTodo: string) => void,
     setFilter: (filter: string) => void,
     setEditingText: (edit: string) => void,
     loadTodos: () => Promise<void>,
@@ -28,7 +26,6 @@ export type TodoStore = TodoState & TodoActions;
 export const initTodoStore = (): TodoState => {
     return {
         todos: [],
-        newTodo: "",
         editingId: null,
         editingText: '',
         filter: 'all',
@@ -39,17 +36,16 @@ export const initTodoStore = (): TodoState => {
 export const createTodoStore = () => {
     return createStore<TodoStore>()((set, get) => ({
         ...initTodoStore(),
-        addTodo: async () => {
-            const { newTodo, todos } = get();
-            if (newTodo.trim()) {
+        addTodo: async (td) => {
+            const { todos } = get();
+            if (td) {
                 const todo = {
-                    title: newTodo.trim(),
+                    title: td?.trim(),
                 };
                 const res = await addTodo(todo)
                 const newTds = [res, ...todos]
                 set({
                     todos: newTds,
-                    newTodo: ''
                 })
             }
         },
@@ -94,11 +90,6 @@ export const createTodoStore = () => {
             set({
                 editingId: null,
                 editingText: ''
-            })
-        },
-        setNewTodo: async (newTodo: string) => {
-            set({
-                newTodo: newTodo
             })
         },
         setFilter: async (filter: string) => {
