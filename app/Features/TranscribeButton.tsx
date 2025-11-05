@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Mic, MicOff } from "lucide-react"
 import { useVoiceAgent } from "../lib/hooks/useVoiceAgent";
-import {callLLM} from "../lib/api/ollama";
-type tranScribeProps = {
-    setNewTodo?: (todo: string) => void,
-    addTodo: () => void
+import { callLLM } from "../lib/api/ollama";
+
+type TodoParams = {
+    addTodo: (td: string | undefined) => void
 }
-export default function TranscribeButton({  addTodo }: tranScribeProps) {
+export default function TranscribeButton({ addTodo }: TodoParams) {
     const {
         startRecording,
         stopRecording,
@@ -19,25 +19,25 @@ export default function TranscribeButton({  addTodo }: tranScribeProps) {
     } = useVoiceAgent();
 
     // Send to LLM when transcription is ready
-      useEffect(() => {
+    useEffect(() => {
         if (result?.text) {
-          invokeOllama(result.text);
+            addTodo(result.text)
+            invokeOllama(result.text);
         }
-      }, [result]);
+    }, [result]);
 
-      const invokeOllama = async (text: string) => {
-        if(text) {
+    const invokeOllama = async (text: string) => {
+        if (text) {
             const response = await callLLM(text);
             console.log(response, 'response')
         }
-      };
-  
+    };
+
     return (
         <>
             {
                 !isRecording ? (
                     <Button
-                        disabled
                         variant="outline" size="lg"
                         onClick={startRecording}
                     >

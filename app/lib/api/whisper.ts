@@ -2,7 +2,7 @@ export const sendToWhisper = async (audioBlob: Blob): Promise<any> => {
     // 🔥 Point to your Whisper server
     const WHISPER_API_URL =
         typeof window !== 'undefined' && window.location.hostname === 'localhost'
-            ? 'http://localhost:8000/transcribe'
+            ? 'http://localhost:8001/transcribe'
             : 'https://YOUR_NGROK_URL.ngrok.io/transcribe'; // ← Replace with your ngrok URL
 
     try {

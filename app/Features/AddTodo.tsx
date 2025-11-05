@@ -6,9 +6,9 @@ import { Card } from '@/components/ui/card';
 import { useTodoStore } from "../providers/todo-store-provider";
 import TranscribeButton from './TranscribeButton';
 export default function AddTodo() {
-  const { addTodo } = useTodoStore((state) => state)
+
+  const addTodo = useTodoStore((state) => state.addTodo)
   const inputRef = useRef<HTMLInputElement>(null);
-  console.log('render me?')
 
   const clearInput = () => {
  if (inputRef.current) {
@@ -37,7 +37,7 @@ export default function AddTodo() {
           <Plus className="w-5 h-5" />
           Add
         </Button>
-        {/* <TranscribeButton setNewTodo={setNewTodo} addTodo={addTodo}/> */}
+        <TranscribeButton addTodo={addTodo} />
       </div>
     </Card>
   )
