@@ -22,16 +22,16 @@ export default function TranscribeButton({ addTodo }: TodoParams) {
     useEffect(() => {
         if (result?.text) {
             addTodo(result.text)
-            invokeOllama(result.text);
+            // invokeOllama(result.text);
         }
     }, [result]);
 
-    const invokeOllama = async (text: string) => {
-        if (text) {
-            const response = await callLLM(text);
-            console.log(response, 'response')
-        }
-    };
+    // const invokeOllama = async (text: string) => {
+    //     if (text) {
+    //         const response = await callLLM(text);
+    //         console.log(response, 'response')
+    //     }
+    // };
 
     return (
         <>
