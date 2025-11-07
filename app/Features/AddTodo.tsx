@@ -23,7 +23,7 @@ export default function AddTodo() {
     <motion.article
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-                  transition={{ ease: "easeInOut", duration: 1 }}
+      transition={{ ease: "easeInOut", duration: 1 }}
 
     >
       <Card className="p-6 mb-8 @container/card">

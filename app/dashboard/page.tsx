@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Plus, CheckCircle, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, Home, BarChart3, Calendar, Bell, Search, Filter, TrendingUp, Users, Activity, Clock, ChevronDown, Save, Eye, EyeOff } from 'lucide-react';
 import { Todos, Analytics, Completion } from '../entities/todos';
+import AgentButton from '../Features/AgentButton';
 
 export default function Dashboard() {
     const [todos, setTodos] = useState<Todos[]>([
@@ -75,6 +76,8 @@ export default function Dashboard() {
         <div className="container mx-auto px-4 py-8 max-w-4xl">
 
             <div className="space-y-8">
+                {/* AI Agent */}
+                <AgentButton/>
                 {/* Stats Overview */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
