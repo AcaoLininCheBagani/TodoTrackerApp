@@ -42,11 +42,15 @@ export const createTodoStore = () => {
                 const todo = {
                     title: td?.trim(),
                 };
+                
                 const res = await addTodo(todo)
-                const newTds = [res, ...todos]
-                set({
-                    todos: newTds,
-                })
+
+                if(res){
+                    const getAllTodos = await GetAllTodos()
+                    set({
+                        todos: getAllTodos,
+                    })
+                }
             }
         },
         toggleTodo: async (id: number | undefined) => {

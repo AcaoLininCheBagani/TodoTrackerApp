@@ -4,7 +4,7 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, L
 import { Plus, CheckCircle, Circle, Trash2, Edit3, X, User, Settings, LogOut, Menu, Home, BarChart3, Calendar, Bell, Search, Filter, TrendingUp, Users, Activity, Clock, ChevronDown, Save, Eye, EyeOff } from 'lucide-react';
 import { Todos, Analytics, Completion } from '../entities/todos';
 import AgentButton from '../Features/AgentButton';
-import VoiceVisualizer from '../Features/VoiceVisualizer';
+
 export default function Dashboard() {
     const [todos, setTodos] = useState<Todos[]>([
         { id: 1, text: 'Complete project proposal', completed: false, priority: 'high', createdAt: '2024-01-15' },
@@ -76,14 +76,6 @@ export default function Dashboard() {
         <div className="container mx-auto px-4 py-8 max-w-4xl">
 
             <div className="space-y-8">
-                 <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <VoiceVisualizer 
-        barCount={15}
-        barWidth={6}
-        sensitivity={3}
-        className="border border-blue-900/30 rounded-xl p-6 bg-gray-800/50"
-      />
-    </div>
                 {/* AI Agent */}
                 <AgentButton/>
                 {/* Stats Overview */}
@@ -138,7 +130,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Charts */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">Weekly Task Completion</h3>
                         <div className="h-64">
@@ -198,7 +190,7 @@ export default function Dashboard() {
                             </ResponsiveContainer>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Recent Activity */}
                 <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">

@@ -3,7 +3,7 @@ import { toast } from "sonner"
 
 export async function GetAllTodos() {
     try {
-        let data = await fetch(`http://localhost:8000/api/todos`, {
+        let data = await fetch(`https://express-todo-api-u2nx.onrender.com/api/todos`, {
             method: 'GET',
             // i will add JWT later
         })
@@ -21,7 +21,7 @@ export async function GetAllTodos() {
 
 export async function addTodo(todo: Todo) {
     try {
-        let data = await fetch(`http://localhost:8000/api/todos`, {
+        let data = await fetch(`https://express-todo-api-u2nx.onrender.com/todos`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(todo),
@@ -42,7 +42,7 @@ export async function addTodo(todo: Todo) {
 
 export async function updateTodo(todo: Todo) {
     try {
-        let data = await fetch(`http://localhost:8000/api/todos/${todo._id}`, {
+        let data = await fetch(`https://express-todo-api-u2nx.onrender.com/api/todos/${todo._id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(todo)
@@ -63,7 +63,7 @@ export async function updateTodo(todo: Todo) {
 
 export async function deletTodo(id: number) {
     try {
-        let data = await fetch(`http://localhost:8000/api/todos/${id}`, {
+        let data = await fetch(`https://express-todo-api-u2nx.onrender.com/api/todos/${id}`, {
             method: 'DELETE',
             // i will add JWT later
         })
