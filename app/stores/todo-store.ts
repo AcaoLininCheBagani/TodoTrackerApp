@@ -10,7 +10,7 @@ export type TodoState = {
 }
 
 export type TodoActions = {
-    addTodo: (td: string|undefined) => void,
+    addTodo: (td: string | undefined) => void,
     toggleTodo: (id: number | undefined) => void,
     deleteTodo: (id: number | undefined) => void,
     startEditing: (todo: Todo) => void,
@@ -37,26 +37,23 @@ export const createTodoStore = () => {
     return createStore<TodoStore>()((set, get) => ({
         ...initTodoStore(),
         addTodo: async (td) => {
+            set({loading: true})
             const { todos } = get();
             if (td) {
                 const todo = {
                     title: td?.trim(),
                 };
-                
                 const res = await addTodo(todo)
-
-                if(res){
-                    const getAllTodos = await GetAllTodos()
-                    set({
-                        todos: getAllTodos,
-                    })
-                }
+                set({
+                    todos: [res, ...todos],
+                })
+                set({loading: false})
             }
         },
         toggleTodo: async (id: number | undefined) => {
             const { todos } = get();
             const result = todos.find(todo => todo._id === id)
-            const newTodos = { _id: result?._id, title: result?.title, completed: result?.completed ? false:true, priority: result?.priority }
+            const newTodos = { _id: result?._id, title: result?.title, completed: result?.completed ? false : true, priority: result?.priority }
             const res = await updateTodo(newTodos)
             const newArr = todos.map(td => td._id === res._id ? { ...td, ...res } : td)
             set({
@@ -65,10 +62,10 @@ export const createTodoStore = () => {
         },
         deleteTodo: async (id: number | undefined) => {
             const { todos } = get()
-            if(id){
+            if (id) {
                 const result = await deletTodo(id);
                 const newTodos = todos.filter(td => td._id !== result.id)
-                set({todos: newTodos})
+                set({ todos: newTodos })
             }
         },
         startEditing: async (todo: Todo) => {

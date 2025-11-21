@@ -9,7 +9,7 @@ import * as motion from "motion/react-client"
 
 export default function AddTodo() {
 
-  const addTodo = useTodoStore((state) => state.addTodo)
+  const {addTodo, loading} = useTodoStore((state) => state)
   const inputRef = useRef<HTMLInputElement>(null);
 
   const clearInput = () => {
@@ -36,6 +36,7 @@ export default function AddTodo() {
             onKeyDown={(e) => e.key === 'Enter' && !e.repeat && addTodo(inputRef?.current?.value) && clearInput()}
           />
           <Button
+            disabled={loading}
             variant="outline" size="lg"
             onClick={() => {
               addTodo(inputRef?.current?.value),
