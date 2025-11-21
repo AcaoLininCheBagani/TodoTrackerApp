@@ -21,7 +21,7 @@ export async function GetAllTodos() {
 
 export async function addTodo(todo: Todo) {
     try {
-        let data = await fetch(`https://express-todo-api-u2nx.onrender.com/todos`, {
+        let data = await fetch(`https://express-todo-api-u2nx.onrender.com/api/todos`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(todo),
