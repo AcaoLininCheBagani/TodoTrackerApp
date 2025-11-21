@@ -3,6 +3,7 @@ export interface Todo {
     title: string | undefined,
     completed?: boolean | undefined,
     priority?: string | undefined,
+    createdAt?: string | number | Date
 }
 
 export interface TodoProps {
