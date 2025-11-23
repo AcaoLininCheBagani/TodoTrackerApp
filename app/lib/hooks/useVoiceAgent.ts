@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import { useState, useRef } from 'react';
-import { sendToWhisper } from '../api/whisper';
+import { useState, useRef } from "react";
+import { sendToWhisper } from "../api/whisper";
+import { audio } from "framer-motion/client";
 type TranscriptionResult = {
   text: string;
   language?: string;
@@ -28,7 +29,7 @@ export function useVoiceAgent() {
       streamRef.current = stream;
 
       const mediaRecorder = new MediaRecorder(stream, {
-        mimeType: 'audio/webm;codecs=opus',
+        mimeType: "audio/webm;codecs=opus",
       });
       audioChunksRef.current = [];
       mediaRecorderRef.current = mediaRecorder;
@@ -41,16 +42,24 @@ export function useVoiceAgent() {
         setIsRecording(false);
         setIsTranscribing(true);
 
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        const audioBlob = new Blob(audioChunksRef.current, {
+          type: "audio/webm",
+        });
+
+        const audioURL = URL.createObjectURL(audioBlob);
         try {
-          const whisperResult = await sendToWhisper(audioBlob);
+          const whisperResult = await sendToWhisper(audioURL);
           setResult({
             text: whisperResult.text,
             language: whisperResult.language,
             language_probability: whisperResult.language_probability,
           });
-        } catch (err: any) {
-          setError(err.message || 'Transcription failed');
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError("Transcription failed");
+          }
         } finally {
           setIsTranscribing(false);
           // Clean up stream
@@ -63,18 +72,18 @@ export function useVoiceAgent() {
 
       // Auto-stop after 15 seconds
       setTimeout(() => {
-        if (mediaRecorder.state === 'recording') {
+        if (mediaRecorder.state === "recording") {
           mediaRecorder.stop();
         }
       }, 15000);
-    } catch (err: any) {
-      setError('Microphone access denied or not supported.');
+    } catch (err: unknown) {
+      setError("Microphone access denied or not supported.");
       console.error(err);
     }
   };
 
   const stopRecording = () => {
-    if (mediaRecorderRef.current?.state === 'recording') {
+    if (mediaRecorderRef.current?.state === "recording") {
       mediaRecorderRef.current.stop();
       cleanup();
     }

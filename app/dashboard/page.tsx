@@ -8,7 +8,8 @@ export default function Dashboard() {
   const { todos, loadTodos } = useTodoStore((state) => state);
   useEffect(() => {
     loadTodos();
-  }, [loadTodos]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="space-y-8">
@@ -38,12 +39,12 @@ export default function Dashboard() {
                     }`}
                   ></div>
                   <span
-                    className={`flex-1 ${todo.completed ? "line-through text-gray-500" : "text-gray-800"} ml-5`}
+                    className={`flex-1 ${todo.completed ? "line-through text-gray-500" : "text-gray-800"} ml-3`}
                   >
                     {todo.title}
                   </span>
                 </div>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-gray-500 ml-5">
                   {todo.createdAt &&
                     new Date(todo.createdAt).toLocaleDateString()}
                 </span>
