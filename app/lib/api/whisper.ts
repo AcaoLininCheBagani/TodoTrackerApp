@@ -1,47 +1,36 @@
 import { pipeline } from "@huggingface/transformers";
 
 export const sendToWhisper = async (audioBlob: string): Promise<any> => {
-  // 🔥 Point to your Whisper server
-  const WHISPER_API_URL =
-    typeof window !== "undefined" && window.location.hostname === "localhost"
-      ? "http://localhost:8001/transcribe"
-      : "https://YOUR_NGROK_URL.ngrok.io/transcribe"; // ← Replace with your ngrok URL
+    try {
+        const transcriber = await pipeline(
+            "automatic-speech-recognition",
+            "Xenova/whisper-tiny.en",
+            { dtype: "q8" },
+        );
+        const output = await transcriber(audioBlob);
+        console.log(output); 
+        const transcribedText = Array.isArray(output) ? output[0].text : output.text;
 
-  // try {
-  //     const formData = new FormData();
-  //     formData.append('file', audioBlob, 'voice.webm');
+       // For more complex extraction, use a model trained on similar tasks
+        const extractor = await pipeline(
+            "text2text-generation",
+            "Xenova/t5-small" // Or try other T5 variants
+        );
+        
+        const extractionPrompt = `Extract todo item from: ${transcribedText}`;
+        const extracted = await extractor(extractionPrompt, {
+            max_new_tokens: 30
+        });
+        console.log(extracted)
+        // const user_intents = ['add', 'update', 'delete'];
 
-  //     const res = await fetch(WHISPER_API_URL, {
-  //         method: 'POST',
-  //         body: formData,
-  //     });
-
-  //     if (!res.ok) {
-  //         const err = await res.json().catch(() => ({}));
-  //         throw new Error(err.detail || 'Failed to reach Whisper server');
-  //     }
-
-  //     return res.json();
-  // }
-  // catch (err) {
-  //     console.error('whisper python call failed:', err);
-  //     return 'Failed to reach Whisper server'
-  // }
-  try {
-    // console.log(audioBlob);
-    // const arrayBuffer = await audioBlob.arrayBuffer();
-    // const audioCtx = new AudioContext();
-    // const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-    // const audioData = audioBuffer.getChannelData(0);
-    const transcriber = await pipeline(
-      "automatic-speech-recognition",
-      "Xenova/whisper-tiny.en",
-      { dtype: "q8" },
-    );
-    const output = await transcriber(audioBlob);
-    console.log(output);
-  } catch (err) {
-    console.error("whisper python call failed:", err);
-    return "Failed to reach Whisper server";
-  }
+        // for (let keyword of user_intents) {
+        //     if (text.match(keyword)) {
+        //         console.log(keyword)
+        //     }
+        // }
+    } catch (err) {
+        console.error("whisper python call failed:", err);
+        return "Failed to reach Whisper server";
+    }
 };
