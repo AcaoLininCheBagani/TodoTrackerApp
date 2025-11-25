@@ -31,9 +31,7 @@ export default function RootLayout({
       >
         <Toaster />
         <TodoStoreProvider>
-          <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-            {/* header*/}
-            <Header />
+          <div className="min-h-screen bg-linear-to-br from-slate-50 to-blue-50">
             {children}
           </div>
         </TodoStoreProvider>

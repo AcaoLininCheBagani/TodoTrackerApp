@@ -1,8 +1,7 @@
 "use client";
 import { useEffect } from "react";
-
-import AgentButton from "../Features/AgentButton";
-import { useTodoStore } from "../providers/todo-store-provider";
+import AgentButton from "../../Features/AgentButton";
+import { useTodoStore } from "../../providers/todo-store-provider";
 
 export default function Dashboard() {
   const { todos, loadTodos } = useTodoStore((state) => state);

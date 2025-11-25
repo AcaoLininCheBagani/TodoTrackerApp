@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,8 +6,16 @@ import { Card } from "@/components/ui/card";
 import { useTodoStore } from "../providers/todo-store-provider";
 import TranscribeButton from "./TranscribeButton";
 import * as motion from "motion/react-client";
-
+import { useVoiceAgent } from "../lib/hooks/useVoiceAgent";
 export default function AddTodo() {
+  const {
+    startRecording,
+    stopRecording,
+    isRecording,
+    isTranscribing,
+    result,
+    error,
+  } = useVoiceAgent();
   const { addTodo, loading } = useTodoStore((state) => state);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -18,6 +26,12 @@ export default function AddTodo() {
     }
   };
 
+  useEffect(() => {
+    if (result && inputRef.current) {
+      console.log(result, "test");
+      inputRef.current.value = result;
+    }
+  }, [result]);
   return (
     <motion.article
       initial={{ opacity: 0 }}
@@ -50,7 +64,11 @@ export default function AddTodo() {
             <Plus className="w-5 h-5" />
             Add
           </Button>
-          <TranscribeButton addTodo={addTodo} />
+          <TranscribeButton
+            startRecording={startRecording}
+            stopRecording={stopRecording}
+            isRecording={isRecording}
+          />
         </div>
       </Card>
     </motion.article>

@@ -1,49 +1,91 @@
-'use client'
-import { useEffect, useState } from 'react';
-import StatsCard from './PageComponents/StatsCard';
-import AddTodo from './Features/AddTodo';
-import FilterButton from './Features/FilterButton';
-import TodoList from './Features/TodoList';
-import { Card, CardContent } from '@/components/ui/card';
-import { useTodoStore } from './providers/todo-store-provider';
-import * as motion from "motion/react-client"
+// app/page.tsx
+"use client";
 
-export default function Home() {
-  const getTodos = useTodoStore((state) => state.loadTodos);
-  useEffect(() => {
-    getTodos()
-  }, [getTodos])
+import { useState } from "react";
+import LoginForm from "./components/login-form";
+import RegisterForm from "./components/register-form";
+
+export default function HomePage() {
+  const [activeForm, setActiveForm] = useState<"login" | "register">("login");
+
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      {/* Stats Cards */}
-      <StatsCard />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="container mx-auto px-4">
+        <div className="flex min-h-screen">
+          {/* Left Side - Hero Content */}
+          <div className="hidden md:flex md:flex-1 flex-col justify-center px-12">
+            <div className="max-w-lg">
+              <h1 className="text-5xl font-bold text-gray-900 mb-6">
+                Welcome to <span className="text-blue-600">TaskMaster</span>
+              </h1>
+              <p className="text-xl text-gray-600 mb-8">
+                Organize your life, boost your productivity, and achieve your
+                goals with our intuitive task management platform.
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-center">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                    <span className="text-blue-600 font-bold">✓</span>
+                  </div>
+                  <span className="text-gray-700">
+                    Manage tasks effortlessly
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                    <span className="text-blue-600 font-bold">✓</span>
+                  </div>
+                  <span className="text-gray-700">
+                    Set priorities and deadlines
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                    <span className="text-blue-600 font-bold">✓</span>
+                  </div>
+                  <span className="text-gray-700">
+                    Collaborate with your team
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      {/* Add Todo Form */}
-      <AddTodo />
+          {/* Right Side - Auth Forms */}
+          <div className="flex-1 flex items-center justify-center px-4">
+            <div className="w-full max-w-md">
+              {/* Form Toggle */}
+              <div className="flex mb-8 bg-white rounded-lg p-1 shadow-sm">
+                <button
+                  onClick={() => setActiveForm("login")}
+                  className={`flex-1 py-3 px-4 rounded-md font-medium transition-all ${
+                    activeForm === "login"
+                      ? "bg-blue-600 text-white shadow-md"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => setActiveForm("register")}
+                  className={`flex-1 py-3 px-4 rounded-md font-medium transition-all ${
+                    activeForm === "register"
+                      ? "bg-blue-600 text-white shadow-md"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  Sign Up
+                </button>
+              </div>
 
-      <motion.article
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ ease: "easeInOut", duration: 0.5 }}
-
-      >
-        <Card className="@container/card">
-          {/* Filter Buttons */}
-          <FilterButton />
-          {/* Todo List */}
-          <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-            <TodoList
-            />
-          </CardContent>
-        </Card>
-      </motion.article>
-
-      {/* Footer */}
-      <div className="text-center mt-8 text-gray-500 text-sm">
-        <p>Click on the circle to mark tasks as complete • Double-click to edit</p>
+              {/* Forms */}
+              <div className="bg-white rounded-2xl shadow-xl p-8">
+                {activeForm === "login" ? <LoginForm /> : <RegisterForm />}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-
-

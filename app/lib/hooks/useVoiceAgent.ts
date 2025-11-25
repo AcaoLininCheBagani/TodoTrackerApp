@@ -3,16 +3,10 @@
 import { useState, useRef } from "react";
 import { sendToWhisper } from "../api/whisper";
 
-type TranscriptionResult = {
-  text: string;
-  language?: string;
-  language_probability?: number;
-};
-
 export function useVoiceAgent() {
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
-  const [result, setResult] = useState<TranscriptionResult | null>(null);
+  const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -48,10 +42,8 @@ export function useVoiceAgent() {
 
         const audioURL = URL.createObjectURL(audioBlob);
         try {
-
           const whisperResult = await sendToWhisper(audioURL);
           setResult(whisperResult);
-
         } catch (err: unknown) {
           if (err instanceof Error) {
             setError(err.message);
@@ -74,7 +66,6 @@ export function useVoiceAgent() {
           mediaRecorder.stop();
         }
       }, 15000);
-
     } catch (err: unknown) {
       setError("Microphone access denied or not supported.");
       console.error(err);
