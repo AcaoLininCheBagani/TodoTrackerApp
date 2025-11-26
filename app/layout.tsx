@@ -4,7 +4,6 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "./PageComponents/Header";
 import { TodoStoreProvider } from "./providers/todo-store-provider";
-import { AuthProvider } from "./contexts/auth-context";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,11 +31,9 @@ export default function RootLayout({
       >
         <Toaster />
         <TodoStoreProvider>
-          <AuthProvider>
-            <div className="min-h-screen bg-linear-to-br from-slate-50 to-blue-50">
-              {children}
-            </div>
-          </AuthProvider>
+          <div className="min-h-screen bg-linear-to-br from-slate-50 to-blue-50">
+            {children}
+          </div>
         </TodoStoreProvider>
       </body>
     </html>

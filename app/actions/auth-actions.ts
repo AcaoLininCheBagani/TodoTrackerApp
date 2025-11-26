@@ -1,6 +1,5 @@
 "use server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export const loginAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -58,4 +57,38 @@ export const logoutAction = async () => {
     succes: true,
     path: "/",
   };
+};
+
+export const createUserAction = async (formData: FormData) => {
+  const name = formData.get("name")?.toString();
+  const email = formData.get("email")?.toString();
+  const password = formData.get("password")?.toString();
+  try {
+    const response = await fetch("http://localhost:10000/api/user-create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+    if (response.ok) {
+      const userData = await response.json();
+      return {
+        success: true,
+        message: userData.message || "Successfully created account.",
+      };
+    } else {
+      const errorData = await response.json();
+      return {
+        success: false,
+        message: errorData.message || "Registration failed",
+      };
+    }
+  } catch (error) {
+    console.error("Network error:", error);
+    return {
+      success: false,
+      message: "Network error. Please try again.",
+    };
+  }
 };

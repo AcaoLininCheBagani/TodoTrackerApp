@@ -1,75 +1,45 @@
 // components/register-form.tsx
 "use client";
-
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-// import { useAuth } from "../contexts/auth-context";
-
+import { createUserAction } from "../actions/auth-actions";
 export default function RegisterForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  // const { login } = useAuth();
-  const router = useRouter();
+  const [success, setSuccess] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (formData: FormData) => {
     setIsLoading(true);
     setError("");
 
     // Basic validation
-    if (formData.password !== formData.confirmPassword) {
+    if (
+      formData.get("password")?.toString() !==
+      formData.get("confirmPassword")?.toString()
+    ) {
       setError("Passwords do not match");
       setIsLoading(false);
       return;
     }
 
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters long");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        // login(userData);
-        router.push("/dashboard");
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message || "Registration failed");
+    if (formData.get("password")?.toString()) {
+      const pwLen = formData.get("password")?.toString();
+      if (pwLen && pwLen?.length < 6) {
+        setError("Password must be at least 6 characters long");
+        setIsLoading(false);
+        return;
       }
-    } catch (error) {
-      console.error("Registration error:", error);
-      setError("Network error. Please try again.");
-    } finally {
-      setIsLoading(false);
     }
+
+    const res = await createUserAction(formData);
+    if (!res.success) {
+      setError(res.message);
+      console.log(res.message);
+    }
+    if (res && res.success) {
+      setSuccess(res.message);
+      console.log(res.message);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -84,7 +54,13 @@ export default function RegisterForm() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      {success && (
+        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
+          {success}
+        </div>
+      )}
+
+      <form action={handleSubmit} className="space-y-6">
         <div>
           <label
             htmlFor="name"
@@ -96,8 +72,6 @@ export default function RegisterForm() {
             id="name"
             name="name"
             type="text"
-            value={formData.name}
-            onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your full name"
             required
@@ -115,8 +89,6 @@ export default function RegisterForm() {
             id="email"
             name="email"
             type="email"
-            value={formData.email}
-            onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your email"
             required
@@ -134,8 +106,6 @@ export default function RegisterForm() {
             id="password"
             name="password"
             type="password"
-            value={formData.password}
-            onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Create a password"
             required
@@ -156,8 +126,6 @@ export default function RegisterForm() {
             id="confirmPassword"
             name="confirmPassword"
             type="password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Confirm your password"
             required
