@@ -5,9 +5,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface User {
-  id: string;
-  email: string;
-  name: string;
+  id?: string;
+  email?: string;
+  name?: string;
+  token?: string;
 }
 
 interface AuthContextType {
@@ -24,30 +25,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    // Check auth status by calling your Express backend
-    const checkAuth = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/auth/verify", {
-          credentials: "include", // Important for cookies
-        });
+  // useEffect(() => {
+  //   // Check auth status by calling your Express backend
+  //   const checkAuth = async () => {
+  //     try {
+  //       const response = await fetch("http://localhost:5000/api/auth/verify", {
+  //         credentials: "include", // Important for cookies
+  //       });
 
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        console.error("Auth check failed:", error);
-        setUser(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  //       if (response.ok) {
+  //         const userData = await response.json();
+  //         setUser(userData);
+  //       } else {
+  //         setUser(null);
+  //       }
+  //     } catch (error) {
+  //       console.error("Auth check failed:", error);
+  //       setUser(null);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    checkAuth();
-  }, []);
+  //   checkAuth();
+  // }, []);
 
   const login = (userData: User) => {
     setUser(userData);

@@ -7,6 +7,7 @@ import { useTodoStore } from "../providers/todo-store-provider";
 import TranscribeButton from "./TranscribeButton";
 import * as motion from "motion/react-client";
 import { useVoiceAgent } from "../lib/hooks/useVoiceAgent";
+import { useAuth } from "../contexts/auth-context";
 export default function AddTodo() {
   const {
     startRecording,
@@ -16,6 +17,7 @@ export default function AddTodo() {
     result,
     error,
   } = useVoiceAgent();
+  const { user } = useAuth();
   const { addTodo, loading } = useTodoStore((state) => state);
   const inputRef = useRef<HTMLInputElement>(null);
 

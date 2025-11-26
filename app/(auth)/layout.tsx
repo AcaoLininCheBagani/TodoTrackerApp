@@ -1,5 +1,5 @@
-"use client";
 import Header from "../PageComponents/Header";
+
 export default function AuthLayout({
   children,
 }: {

@@ -1,47 +1,30 @@
-// components/login-form.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-// import { useAuth } from "../contexts/auth-context";
-
+import { useAuth } from "../contexts/auth-context";
+import { loginAction } from "../actions/auth-actions";
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  // const { login } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (formData: FormData) => {
     setIsLoading(true);
     setError("");
 
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-        credentials: "include",
-      });
+    const res = await loginAction(formData);
 
-      if (response.ok) {
-        const userData = await response.json();
-        // login(userData);
-        router.push("/dashboard");
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message || "Invalid email or password");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      setError("Network error. Please try again.");
-    } finally {
-      setIsLoading(false);
+    if (!res.succes) {
+      setError(res.errorData);
+      console.log(res.errorData);
     }
+    if (res && res.succes && res.user) {
+      localStorage.setItem("user", JSON.stringify(res.user));
+      router.push(res?.path || "/todo");
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -56,7 +39,7 @@ export default function LoginForm() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form action={handleSubmit} className="space-y-6">
         <div>
           <label
             htmlFor="email"
@@ -67,8 +50,7 @@ export default function LoginForm() {
           <input
             id="email"
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your email"
             required
@@ -85,8 +67,7 @@ export default function LoginForm() {
           <input
             id="password"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your password"
             required
