@@ -1,9 +1,9 @@
 import { Todo } from "@/app/entities/todos";
 import { toast } from "sonner";
 
-export async function GetAllTodos() {
+export async function GetAllTodos(userId: string) {
   try {
-    const data = await fetch(`http://localhost:10000/api/todos`, {
+    const data = await fetch(`http://localhost:10000/api/todos?id=${userId}`, {
       method: "GET",
       // i will add JWT later
     });

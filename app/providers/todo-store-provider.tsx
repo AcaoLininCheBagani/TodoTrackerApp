@@ -1,32 +1,31 @@
-"use client"
-import { createContext, useContext, useRef, type ReactNode } from "react";
+"use client";
+import { createContext, useContext, useMemo, type ReactNode } from "react";
 import { useStore } from "zustand";
 import { createTodoStore, type TodoStore } from "../stores/todo-store";
 
-const TodoStoreContext = createContext<ReturnType<typeof createTodoStore> | undefined>(undefined);
+export type CounterStoreApi = ReturnType<typeof createTodoStore>;
 
-export interface TodoStoreProviderProps { children: ReactNode }
+const TodoStoreContext = createContext<CounterStoreApi | undefined>(undefined);
+
+export interface TodoStoreProviderProps {
+  children: ReactNode;
+}
 
 export const TodoStoreProvider = ({ children }: TodoStoreProviderProps) => {
-    const storeRef = useRef<ReturnType<typeof createTodoStore> | null>(null);
-
-    if(!storeRef.current){
-        storeRef.current = createTodoStore();
-    }
-
-    return (
-        <TodoStoreContext.Provider value={storeRef.current}>
-            {children}
-        </TodoStoreContext.Provider>
-    )
-}
+  const store = useMemo(() => createTodoStore(), []);
+  return (
+    <TodoStoreContext.Provider value={store}>
+      {children}
+    </TodoStoreContext.Provider>
+  );
+};
 
 export const useTodoStore = <T,>(selector: (state: TodoStore) => T): T => {
-    const store = useContext(TodoStoreContext);
+  const store = useContext(TodoStoreContext);
 
-    if(!store){
-        throw new Error(`useTodoStore must be used within TodoStoreProvider`)
-    }
+  if (!store) {
+    throw new Error(`useTodoStore must be used within TodoStoreProvider`);
+  }
 
-    return useStore(store, selector);
-}
+  return useStore(store, selector);
+};

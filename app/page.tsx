@@ -9,7 +9,7 @@ export default function HomePage() {
   const [activeForm, setActiveForm] = useState<"login" | "register">("login");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4">
         <div className="flex min-h-screen">
           {/* Left Side - Hero Content */}

@@ -1,5 +1,5 @@
 import { createStore } from "zustand";
-import { Todo } from "../entities/todos";
+import { Todo, User } from "../entities/todos";
 import { addTodo, deletTodo, GetAllTodos, updateTodo } from "../lib/api/todo";
 export type TodoState = {
   todos: Todo[];
@@ -7,6 +7,7 @@ export type TodoState = {
   editingText: string;
   filter: string;
   loading: boolean;
+  user: User | null;
 };
 
 export type TodoActions = {
@@ -19,6 +20,7 @@ export type TodoActions = {
   setFilter: (filter: string) => void;
   setEditingText: (edit: string) => void;
   loadTodos: () => Promise<void>;
+  loadUser: () => Promise<void>;
 };
 
 export type TodoStore = TodoState & TodoActions;
@@ -30,6 +32,7 @@ export const initTodoStore = (): TodoState => {
     editingText: "",
     filter: "all",
     loading: false,
+    user: null,
   };
 };
 
@@ -122,13 +125,32 @@ export const createTodoStore = () => {
       });
     },
     loadTodos: async () => {
+      const user = localStorage.getItem("user");
       try {
-        const allTodos = await GetAllTodos();
-        if (allTodos) {
-          set({ todos: allTodos });
+        if (user) {
+          console.log(user);
+          const userId = JSON.parse(user);
+          const allTodos = await GetAllTodos(userId.id);
+          if (allTodos) {
+            set({ todos: allTodos });
+          }
         }
       } catch (err) {
         console.error("Failed to fetch API", err);
+      }
+    },
+    loadUser: async () => {
+      const usrLocal = localStorage.getItem("user")
+        ? localStorage.getItem("user")
+        : null;
+      try {
+        if (usrLocal) {
+          const userLL = JSON.parse(usrLocal);
+          set({ user: userLL });
+        }
+      } catch (error) {
+        console.log("Error getting user form localStorage", error);
+        set({ user: null });
       }
     },
   }));
