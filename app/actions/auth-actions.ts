@@ -7,13 +7,16 @@ export const loginAction = async (formData: FormData) => {
 
   const cookieStore = await cookies();
   try {
-    const response = await fetch("http://localhost:10000/api/user-login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      "https://express-todo-api-u2nx.onrender.com/api/user-login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       },
-      body: JSON.stringify({ email, password }),
-    });
+    );
 
     if (response.ok) {
       const userData = await response.json();
@@ -64,13 +67,16 @@ export const createUserAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
   try {
-    const response = await fetch("http://localhost:10000/api/user-create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      "https://express-todo-api-u2nx.onrender.com/api/user-create",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
       },
-      body: JSON.stringify({ name, email, password }),
-    });
+    );
     if (response.ok) {
       const userData = await response.json();
       return {

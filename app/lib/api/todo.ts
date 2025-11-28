@@ -3,10 +3,13 @@ import { toast } from "sonner";
 
 export async function GetAllTodos(userId: string) {
   try {
-    const data = await fetch(`http://localhost:10000/api/todos?id=${userId}`, {
-      method: "GET",
-      // i will add JWT later
-    });
+    const data = await fetch(
+      `https://express-todo-api-u2nx.onrender.com/api/todos?id=${userId}`,
+      {
+        method: "GET",
+        // i will add JWT later
+      },
+    );
     const result = await data.json();
     if (result) {
       toast.success("Fetch all todos");
@@ -20,12 +23,15 @@ export async function GetAllTodos(userId: string) {
 
 export async function addTodo(todo: Todo) {
   try {
-    const data = await fetch(`http://localhost:10000/api/todos`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(todo),
-      // i will add JWT later
-    });
+    const data = await fetch(
+      `https://express-todo-api-u2nx.onrender.com/api/todos`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(todo),
+        // i will add JWT later
+      },
+    );
     const result = await data.json();
     if (result) {
       toast.success("Todo has been created");
@@ -39,12 +45,15 @@ export async function addTodo(todo: Todo) {
 
 export async function updateTodo(todo: Todo) {
   try {
-    const data = await fetch(`http://localhost:10000/api/todos/${todo._id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(todo),
-      // i will add JWT later
-    });
+    const data = await fetch(
+      `https://express-todo-api-u2nx.onrender.com/api/todos/${todo._id}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(todo),
+        // i will add JWT later
+      },
+    );
     const result = await data.json();
     if (result) {
       toast.info("Successfully updated todo");
@@ -58,10 +67,13 @@ export async function updateTodo(todo: Todo) {
 
 export async function deletTodo(id: number) {
   try {
-    const data = await fetch(`http://localhost:10000/api/todos/${id}`, {
-      method: "DELETE",
-      // i will add JWT later
-    });
+    const data = await fetch(
+      `https://express-todo-api-u2nx.onrender.com/api/todos/${id}`,
+      {
+        method: "DELETE",
+        // i will add JWT later
+      },
+    );
     const result = await data.json();
     if (result) {
       toast.success("Successfully deleted todo");
