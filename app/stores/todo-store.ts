@@ -55,6 +55,8 @@ export const createTodoStore = () => {
           todos: [res, ...todos],
         });
         set({ loading: false });
+      } else {
+        set({ loading: false });
       }
     },
     toggleTodo: async (id: number | undefined) => {
